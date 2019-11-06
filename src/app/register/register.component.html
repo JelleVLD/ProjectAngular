@@ -1,0 +1,27 @@
+
+<div style="display: flex;justify-content: center; margin-top: 50px;" class="login-wrapper">
+  <mat-card class="box">
+    <mat-card-header>
+      <mat-card-title>Registreer</mat-card-title>
+    </mat-card-header>
+
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit()" class="example-form">
+
+      <mat-card-content>
+          <mat-form-field>
+              <input [(ngModel)]="model.gebruikersNaam" name="gebruikersNaam" matInput placeholder="Gebruikersnaam">
+            </mat-form-field>
+            <mat-form-field>
+                <input [(ngModel)]="model.email" name="email" matInput placeholder="E-mail">
+              </mat-form-field>
+              <mat-form-field>
+                  <input [(ngModel)]="model.wachtWoord" name="wachtWoord" matInput type="password" placeholder="Wachtwoord">
+                </mat-form-field>
+      </mat-card-content>
+
+      <button mat-raised-button color="primary"x
+      [disabled]="!registerForm.form.valid || submitted">Register</button>
+
+    </form>
+  </mat-card>
+</div>
