@@ -1,0 +1,54 @@
+<div style="display: flex;justify-content: center;">
+  <mat-horizontal-stepper #stepper style="max-width: 800px; " class="box">
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup"><div>
+        </div>
+        <ng-template matStepLabel>Choose a Poll Name.</ng-template>
+        <p>First give the poll a name.</p>
+        <mat-form-field>
+          <input matInput [(ngModel)]="poll.naam" name="naam" placeholder="Poll" formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+        <div>
+            <button mat-button (click)="terugKnop()" >Terug naar polls</button>
+          </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Add Answers.</ng-template>
+        <p>Now add answers to your poll,(put a comma ',' after each answer!)</p>
+        <mat-form-field>
+          <input matInput [(ngModel)]="antwoord" name="antwoord" placeholder="Antwoord" formControlName="secondCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+        <div>
+            <button mat-button (click)="terugKnop()" >Terug naar polls</button>
+          </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup" (ngSubmit)="onSubmit()">
+        <ng-template matStepLabel>Sending the poll.</ng-template>
+        <p>And finally send your poll to friends.</p>
+        <mat-form-field>
+          <mat-label>Selecteer een vriend</mat-label>
+          <mat-select formControlName="thirdCtrl" (selectionChange)="selected($event)" multiple>
+              <mat-option *ngFor="let vriend of vrienden" value=" {{vriend.gebruikerID}}"> {{vriend.gebruikersnaam }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+          <div>
+          <button mat-button type="submit" [disabled]="submitted">Send poll</button>
+        </div>
+        <div>
+            <button mat-button (click)="terugKnop()">Terug naar polls</button>
+          </div>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

@@ -9,8 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LogInModule } from './log-in/log-in.module';
-import { MatSidenavModule, MatListModule,MatMenuModule, MatIconModule,MatToolbarModule, MatGridListModule, MatBadgeModule, MatCardModule, MatTabsModule } from '@angular/material';
-import { HeaderComponent } from './header/header.component';
+import { MatListModule,MatMenuModule, MatIconModule,MatToolbarModule, MatGridListModule, MatBadgeModule, MatCardModule, MatTabsModule, MatStepperModule, MatCheckboxModule, MatSelectModule, MatExpansionModule } from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SecurityInterceptor } from './security/security.interceptor';
@@ -18,6 +17,9 @@ import { PollsComponent } from './polls/polls.component';
 import { VriendenComponent } from './vrienden/vrienden.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { VriendenService } from './services/vrienden.service';
+import { NavbarComponent } from './navbar/navbar.component';
+import { NieuwepollComponent } from './nieuwepoll/nieuwepoll.component';
+import { PollinfoComponent } from './pollinfo/pollinfo.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -26,15 +28,18 @@ const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'polls', component: PollsComponent },
   { path: 'vrienden', component: VriendenComponent },
+  { path: 'nieuwePoll', component: NieuwepollComponent }
 ];
 @NgModule({
   declarations: [
     AppComponent,
     RegisterComponent,
-    HeaderComponent,
     HomeComponent,
     PollsComponent,
-    VriendenComponent
+    VriendenComponent,
+    NavbarComponent,
+    NieuwepollComponent,
+    PollinfoComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +49,6 @@ const appRoutes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
     LogInModule,
-    MatSidenavModule,
     MatListModule,
     MatMenuModule,
     MatIconModule,
@@ -55,7 +59,10 @@ const appRoutes: Routes = [
     MatBadgeModule,
     MatCardModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    MatStepperModule,
+    MatSelectModule,
+    MatExpansionModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

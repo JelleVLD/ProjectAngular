@@ -19,12 +19,24 @@ export class VriendenComponent implements OnInit {
   verzoeken: Gebruiker[] = [];
   verzondenVerzoeken: Gebruiker[] = [];
   triggered: Boolean = false;
-  geenOnbekenden: Gebruiker[] = [];
+  geenOnbekenden:number[]=[];
 
 
   constructor(public authService: AuthenticateService, private router: Router, private _vriendenService: VriendenService, public _gebruikerService: GebruikerService) {
 
-  }
+      this._gebruikerService.getGebruikers().subscribe(
+        result => {
+          result.forEach(gebruiker => {
+              if (gebruiker.gebruikerID != this.huidigeGebruiker.gebruikerID) {
+
+                this.alleGebruikers.push(gebruiker);
+
+        
+        }
+      }
+      );
+    });
+}
 
   ngOnInit() {
     if (this.authService.isLoggedIn() != true) {
@@ -32,17 +44,13 @@ export class VriendenComponent implements OnInit {
     }
     this.haalVriendenOp();
     this.huidigeGebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
-    this._gebruikerService.getGebruikers().subscribe(
-      result => {
-        result.forEach(gebruiker => {
-          console.log(this.geenOnbekenden)
-          console.log(Array.prototype.length)
-          if (gebruiker.gebruikerID != this.huidigeGebruiker.gebruikerID && !this.geenOnbekenden.includes(gebruiker)) {
-            this.alleGebruikers.push(gebruiker);
-          }
-        }
-        );
 
+  }
+  stuurVerzoek(gebruikerId){
+    let vriend= new Vriend(0,this.huidigeGebruiker.gebruikerID,gebruikerId,false,null,null)
+    this._vriendenService.maakVerzoek(vriend).subscribe(
+      result => {
+        this.haalVriendenOp();
       }
 
     );
@@ -116,19 +124,20 @@ export class VriendenComponent implements OnInit {
           if (vriend.bevestigd == true) {
             if (vriend.zender.gebruikerID == this.huidigeGebruiker.gebruikerID) {
               this.vrienden.push(vriend.ontvanger);
-              this.geenOnbekenden.push(vriend.ontvanger);
+              this.geenOnbekenden.push(vriend.ontvanger.gebruikerID)
             } else {
+
               this.vrienden.push(vriend.zender);
-              this.geenOnbekenden.push(vriend.zender);
+              this.geenOnbekenden.push(vriend.zender.gebruikerID)
+              
             }
           } else if (vriend.zender.gebruikerID == this.huidigeGebruiker.gebruikerID) {
             this.verzondenVerzoeken.push(vriend.ontvanger);
-            this.geenOnbekenden.push(vriend.ontvanger);
+            this.geenOnbekenden.push(vriend.ontvanger.gebruikerID)
           } else {
             this.verzoeken.push(vriend.zender);
-            this.geenOnbekenden.push(vriend.zender);
+            this.geenOnbekenden.push(vriend.zender.gebruikerID)
           }
-
         });
       }
     );

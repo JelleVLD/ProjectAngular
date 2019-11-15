@@ -1,0 +1,56 @@
+<div class="nav-container" style="text-align: center;">
+    <nav style="text-align: center; ">
+        <mat-toolbar >
+            <mat-toolbar-row style="background-color: #12A3A0;">
+              <span *ngIf="authService.isLoggedIn()" ><button mat-icon-button [matMenuTriggerFor]="appMenu">
+                  <mat-icon>more_vert</mat-icon>
+                </button></span>
+              <span class="alignHeader">
+                
+                <h3>PollAppster</h3>
+              </span>
+              <span *ngIf="!authService.isLoggedIn()">
+                <button style="margin-right: 1em;" mat-icon-button routerLink="login" routerLinkActive="active">Log in </button>
+                <button style="margin-right: 1em;" mat-icon-button routerLink="register" routerLinkActive="active">Register</button>
+              </span>
+              <span *ngIf="authService.isLoggedIn()">
+                  <button mat-icon-button (click)="clearFriendCount()"><mat-icon  matBadge={{friendCount}} [matBadgeHidden]="friendCount <=0" matBadgeColor="warn" [matMenuTriggerFor]="FriendsMenu">supervisor_account</mat-icon>
+                  </button>
+                  <mat-menu #FriendsMenu="matMenu">
+                      <mat-nav-list>
+                        <li *ngIf="verzoeken.length == 0">U heeft geen vriendschapsverzoeken.</li>
+                        <div *ngFor="let verzoek of verzoeken"><a  routerLink="vrienden" routerLinkActive="active" mat-list-item>
+                          {{verzoek.gebruikersnaam}} heeft je een vriendschapsverzoek gestuurd. <i class="material-icons">
+                            arrow_forward_ios
+                            </i></a></div>
+                      </mat-nav-list>
+                    </mat-menu>
+                  <button mat-icon-button (click)="clearNotifCount()"><mat-icon  matBadge={{notificationCount}} [matBadgeHidden]="notificationCount<=0" matBadgeColor="warn" [matMenuTriggerFor]="NotificationMenu">notification_important</mat-icon>
+                  </button>
+                    <mat-menu #NotificationMenu="matMenu">
+                        <mat-nav-list>
+                          <a routerLink="polls" routerLinkActive="active" mat-list-item>Werkt lahn</a>
+                        </mat-nav-list>
+                      </mat-menu>
+      
+                <button (click)="Logout()" style="margin: 1em;" mat-icon-button routerLinkActive="active">Log out </button>
+                
+                </span>
+            </mat-toolbar-row> 
+      
+          </mat-toolbar>
+          <mat-menu #appMenu="matMenu">
+                <mat-nav-list>
+          
+          
+                  <a routerLink="home" routerLinkActive="active" mat-list-item>Home</a>
+                  <a routerLink="polls" routerLinkActive="active" mat-list-item>Mijn polls</a>
+                  <a routerLink="vrienden" routerLinkActive="active" mat-list-item>Mijn vrienden</a>
+                </mat-nav-list>
+              </mat-menu>
+      <router-outlet >
+  
+      </router-outlet>
+    </nav>
+  
+  </div>

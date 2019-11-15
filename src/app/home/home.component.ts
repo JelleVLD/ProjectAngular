@@ -12,9 +12,10 @@ import { Vriend } from '../models/vriend.model';
 })
 export class HomeComponent implements OnInit {
   vrienden: Gebruiker[] = [];
-  huidigeGebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
+  huidigeGebruiker;
   gebruikers: Vriend[] = [];
   constructor(public authService: AuthenticateService, private router: Router,public _vriendenService: VriendenService) {
+
     this.haalVriendenOp();
    }
 
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit {
     if (this.authService.isLoggedIn() != true) {
       this.router.navigate(['/login']);
     }
+    this.huidigeGebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
   }
   haalVriendenOp(){
     this.vrienden =[];

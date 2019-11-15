@@ -11,22 +11,29 @@ export class VriendenService {
   vrienden;
 
   constructor(private http: HttpClient, _gebruikersService: GebruikerService) {
-    this.gebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
+   
    }
   getVrienden(): Observable<Vriend[]> {
+    this.gebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
     this.vrienden = this.http.get<Vriend[]>("https://localhost:44387/api/vrienden/" + this.gebruiker.gebruikerID, {
       headers: new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("token"))
     });
     return this.vrienden;
   }
   deleteVriend(vriendId:number): Observable<Vriend[]> {
+    this.gebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
     return this.http.delete<Vriend[]>("https://localhost:44387/api/vrienden/" + vriendId, {
       headers: new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("token"))
     });
   }
   bevestigVriend(vriendId: number,vriend: Vriend): Observable<Vriend[]> {
-    console.log(vriend)
+    this.gebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
     return this.http.put<Vriend[]>("https://localhost:44387/api/vrienden/" + vriendId,vriend, {
+      headers: new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("token"))
+    });
+  }
+  maakVerzoek(vriend:Vriend): Observable<Vriend[]> {
+    return this.http.post<Vriend[]>("https://localhost:44387/api/vrienden/",vriend, {
       headers: new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("token"))
     });
   }
