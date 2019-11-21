@@ -5,6 +5,9 @@ import { Gebruiker } from '../models/gebruiker.model';
 import { VriendenService } from '../services/vrienden.service';
 import { Vriend } from '../models/vriend.model';
 import { GebruikerService } from '../services/gebruiker.service';
+import { MatSnackBar } from '@angular/material';
+import { Email } from '../models/email.model';
+import { PollGebruikerService } from '../services/poll-gebruiker.service';
 
 @Component({
   selector: 'app-vrienden',
@@ -20,9 +23,10 @@ export class VriendenComponent implements OnInit {
   verzondenVerzoeken: Gebruiker[] = [];
   triggered: Boolean = false;
   geenOnbekenden:number[]=[];
+  mailAdres:string;
 
 
-  constructor(public authService: AuthenticateService, private router: Router, private _vriendenService: VriendenService, public _gebruikerService: GebruikerService) {
+  constructor(public authService: AuthenticateService, private router: Router, private _vriendenService: VriendenService,private _pollGebruikerService: PollGebruikerService, public _gebruikerService: GebruikerService,private _snackbar:MatSnackBar) {
 
       this._gebruikerService.getGebruikers().subscribe(
         result => {
@@ -46,14 +50,30 @@ export class VriendenComponent implements OnInit {
     this.huidigeGebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
 
   }
-  stuurVerzoek(gebruikerId){
-    let vriend= new Vriend(0,this.huidigeGebruiker.gebruikerID,gebruikerId,false,null,null)
-    this._vriendenService.maakVerzoek(vriend).subscribe(
-      result => {
-        this.haalVriendenOp();
-      }
+  stuurMail(){
 
-    );
+ let boodschap= this.huidigeGebruiker.gebruikersnaam + " wil vrienden met je worden op PollAppster! <a href=\"http://localhost:4200/register\">Registreer nu!</a>";
+ let titel= "Vriendschapsverzoek";
+ let mail = new Email(0,this.mailAdres,titel,boodschap)
+ this._pollGebruikerService.stuurMail(mail).subscribe(() => {
+  this._snackbar.open("Mail succesvol verstuurd!","Terug");
+});
+   
+  
+
+  }
+  stuurVerzoek(gebruikerId){
+    if(this.geenOnbekenden.includes(gebruikerId)){
+      this._snackbar.open("U heeft deze gebruiker al toegevoegd","Terug");
+    }else{
+      let vriend= new Vriend(0,this.huidigeGebruiker.gebruikerID,gebruikerId,false,null,null)
+      this._vriendenService.maakVerzoek(vriend).subscribe(
+        result => {
+          this.haalVriendenOp();
+        }
+      );
+    }
+    
   }
   openGebruikersScherm() {
     if(this.triggered===true){

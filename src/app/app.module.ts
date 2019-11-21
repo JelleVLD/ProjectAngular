@@ -9,8 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LogInModule } from './log-in/log-in.module';
-import { MatListModule,MatMenuModule, MatIconModule,MatToolbarModule, MatGridListModule, MatBadgeModule, MatCardModule, MatTabsModule, MatStepperModule, MatCheckboxModule, MatSelectModule, MatExpansionModule } from '@angular/material';
-import { HomeComponent } from './home/home.component';
+import { MatListModule,MatMenuModule, MatIconModule,MatToolbarModule, MatGridListModule, MatBadgeModule, MatCardModule, MatTabsModule, MatStepperModule, MatCheckboxModule, MatSelectModule, MatExpansionModule, MatSnackBarModule } from '@angular/material';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SecurityInterceptor } from './security/security.interceptor';
 import { PollsComponent } from './polls/polls.component';
@@ -25,7 +24,6 @@ const appRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'login', component: LogInComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'home', component: HomeComponent },
   { path: 'polls', component: PollsComponent },
   { path: 'vrienden', component: VriendenComponent },
   { path: 'nieuwePoll', component: NieuwepollComponent }
@@ -34,7 +32,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     RegisterComponent,
-    HomeComponent,
     PollsComponent,
     VriendenComponent,
     NavbarComponent,
@@ -62,7 +59,8 @@ const appRoutes: Routes = [
     MatCardModule,
     MatStepperModule,
     MatSelectModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSnackBarModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

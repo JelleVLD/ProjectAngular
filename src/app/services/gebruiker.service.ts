@@ -10,13 +10,10 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 export class GebruikerService {
   constructor(private http: HttpClient) { }
   getGebruikers(): Observable<Gebruiker[]> {
-    return this.http.get<Gebruiker[]>("https://localhost:44387/api/gebruiker", {
-    headers: new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("token"))
-    });
+    return this.http.get<Gebruiker[]>("https://localhost:44387/api/gebruiker");
 }
 getGebruikersVanVrienden(id): Observable<Gebruiker[]> {
   return this.http.get<Gebruiker[]>("https://localhost:44387/api/gebruiker/", {
-  headers: new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("token")),
   params: new HttpParams().set("id",id)
   });
 }

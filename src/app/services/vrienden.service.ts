@@ -22,19 +22,13 @@ export class VriendenService {
   }
   deleteVriend(vriendId:number): Observable<Vriend[]> {
     this.gebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
-    return this.http.delete<Vriend[]>("https://localhost:44387/api/vrienden/" + vriendId, {
-      headers: new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("token"))
-    });
+    return this.http.delete<Vriend[]>("https://localhost:44387/api/vrienden/" + vriendId);
   }
   bevestigVriend(vriendId: number,vriend: Vriend): Observable<Vriend[]> {
     this.gebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
-    return this.http.put<Vriend[]>("https://localhost:44387/api/vrienden/" + vriendId,vriend, {
-      headers: new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("token"))
-    });
+    return this.http.put<Vriend[]>("https://localhost:44387/api/vrienden/" + vriendId,vriend);
   }
   maakVerzoek(vriend:Vriend): Observable<Vriend[]> {
-    return this.http.post<Vriend[]>("https://localhost:44387/api/vrienden/",vriend, {
-      headers: new HttpHeaders().set("Authorization", "Bearer " + localStorage.getItem("token"))
-    });
+    return this.http.post<Vriend[]>("https://localhost:44387/api/vrienden/",vriend);
   }
 }

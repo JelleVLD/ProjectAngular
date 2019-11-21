@@ -17,7 +17,7 @@ export class LogInComponent implements OnInit {
 
   ngOnInit() {
     if (this._authenticateService.isLoggedIn()==true) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/polls']);
     }
   }
   navigate() {
@@ -28,7 +28,7 @@ export class LogInComponent implements OnInit {
     this._authenticateService.authenticate(this.model).subscribe(result => {
       localStorage.setItem("token",result.token);
     localStorage.setItem("Gebruiker", JSON.stringify(result));
-    this.router.navigate(['/home']);
+    this.router.navigate(['/polls']);
     });
 }
 }

@@ -1,3 +1,12 @@
-<ul *ngFor="let antwoord of poll.antwoorden">
-    <li>{{antwoord.antwoord}}      {{antwoord.stemmen.length}} stem(men)</li>
-</ul>
+<div *ngFor="let antwoord of poll.antwoorden">
+    <p>{{antwoord.antwoord}} {{antwoord.stemmen.length}} stem(men)</p>
+    <div *ngIf="gemaakt==false">
+        <button *ngIf="reedsGestemd.length <1" mat-raised-button color="primary"
+            (click)="plaatsStem(antwoord.antwoordID)">Stem</button>
+        <div *ngIf="reedsGestemd.includes(antwoord.antwoordID)">
+            <button mat-raised-button color="primary" (click)="verwijderStem(antwoord.antwoordID)">Verwijder
+                stem</button>
+        </div>
+    </div>
+
+</div>

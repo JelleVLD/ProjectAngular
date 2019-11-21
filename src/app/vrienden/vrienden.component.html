@@ -1,14 +1,18 @@
 <div style="display: flex;justify-content: center; margin-top: 25px;" class="wrapper">
-        <mat-tab-group class="box">
+    <div class="box">
+        <mat-tab-group>
                 <mat-tab label="Vrienden">
                         <h5 *ngIf="vrienden.length<1">U heeft nog geen vrienden.</h5>
                     <mat-list *ngFor="let vriend of vrienden">
                         <mat-list-item>{{ vriend.gebruikersnaam }}
-                            <button (click)="verwijderVriend(vriend.gebruikerID)" mat-button>Verwijderen</button>
+                            <button  (click)="verwijderVriend(vriend.gebruikerID)" mat-button>Verwijderen</button>
                         </mat-list-item>
                     </mat-list>
                 </mat-tab>
-                <mat-tab label="Verzoeken">
+                <mat-tab>
+                        <ng-template matTabLabel>
+                                <span matBadge={{verzoeken.length}} [matBadgeHidden]="verzoeken.length <=0" matBadgeColor="warn">Verzoeken</span>
+                            </ng-template>
                         <h5 *ngIf="verzoeken.length<1">Geen verzoeken beschikbaar.</h5>
                     <mat-list *ngFor="let vriend of verzoeken">
                         <mat-list-item>{{ vriend.gebruikersnaam }}
@@ -27,15 +31,23 @@
                 </mat-tab>
                 <mat-tab disabled>
                     <ng-template mat-tab-label>
-                        <button (click)="openGebruikersScherm()">
+                        <button (click)="openGebruikersScherm()" mat-raised-button color="primary">
                             Vriend toevoegen
                         </button>
                     </ng-template>
                 </mat-tab>
             
             </mat-tab-group>
-           </div>
-           <div style="display: flex ;flex-direction: column;align-items: center; justify-content: center; margin-top: 50px; background-color: #fff;" *ngIf="triggered == true">
+            <div style="display: flex ;flex-direction: column;align-items: center; justify-content: center; margin-top: 50px; background-color: #fff;" *ngIf="triggered == true">
+                <p>Staat je vriend er niet tussen? stuur hem dan een Mailtje!</p>
+                <form (ngSubmit)="stuurMail()" style="display: flex; flex-direction: row;">
+                       <mat-form-field >
+                        <input matInput [(ngModel)]="mailAdres" name="mailAdres" placeholder="mailadres">
+                      </mat-form-field>
+                      <button mat-raised-button color="primary" type="submit">Stuur mail</button>
+              </form>
+                
+
                 <mat-list *ngFor="let gebruiker of alleGebruikers">
                     <mat-list-item>{{ gebruiker.gebruikersnaam }}
                         <div *ngIf="!verzoeken.includes(gebruiker) && !verzondenVerzoeken.includes(gebruiker && !vrienden.includes(gebruiker))">
@@ -44,4 +56,7 @@
                          </mat-list-item>
                 </mat-list>
             </div>
+        </div>
+           </div>
+           
 

@@ -9,20 +9,23 @@
               {{poll.poll.naam}}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <app-pollinfo *ngIf="gekozenPollID" [pollID]="gekozenPollID"></app-pollinfo>
+          <app-pollinfo *ngIf="gekozenPollID" [pollID]="gekozenPollID" [gemaakt]="true"></app-pollinfo>
         </mat-expansion-panel>
       </mat-accordion>
     </mat-tab>
-    <mat-tab label="Polls van vrienden">
+    <mat-tab>
+        <ng-template matTabLabel>
+            <span matBadge={{vriendenpolls.length}} [matBadgeHidden]="vriendenpolls.length <=0" matBadgeColor="warn">Polls van vrienden</span>
+        </ng-template>
       <h5 *ngIf="vriendenpolls.length<1">Geen polls beschikbaar.</h5>
       <mat-accordion>
-        <mat-expansion-panel *ngFor="let vriendenpoll of vriendenpolls">
+        <mat-expansion-panel *ngFor="let vriendenpoll of vriendenpolls" (click)="haalPollInfoOp(vriendenpoll.poll.pollID)">
           <mat-expansion-panel-header>
             <mat-panel-title>
               {{vriendenpoll.poll.naam}}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <app-pollinfo></app-pollinfo>
+          <app-pollinfo  *ngIf="gekozenPollID" [pollID]="gekozenPollID" [gemaakt]="false"></app-pollinfo>
         </mat-expansion-panel>
       </mat-accordion>
     </mat-tab>
