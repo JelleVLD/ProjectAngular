@@ -8,5 +8,8 @@
                 stem</button>
         </div>
     </div>
-
+</div>
+<div *ngIf="gemaakt ==true">
+    <button mat-raised-button color="primary"
+    (click)="verwijderPoll(poll.pollID)">Verwijder</button>
 </div>

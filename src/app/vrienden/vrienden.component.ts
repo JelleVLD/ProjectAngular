@@ -81,10 +81,6 @@ export class VriendenComponent implements OnInit {
 
     }
   }
-  //geeft alle vriendschapsverzoeken terug
-  vriendenVerzoeken() {
-    return this.verzoeken;
-  }
   //verwijdert de vriendschap met het gegeven gebruikerId via de vriendenService
   verwijderVriend(gebruikerId) {
 
@@ -100,16 +96,11 @@ export class VriendenComponent implements OnInit {
             this._vriendenService.deleteVriend(vriend.vriendenID).subscribe(() => {
               this.haalVriendenOp();
             });
-
           }
         });
-
       }
-
     );
-
   }
-
   //accepteert het verzoek en zet dit in de API via de vriendenService
   toevoegenVriend(gebruikerId) {
     this._vriendenService.getVrienden().subscribe(
@@ -134,12 +125,12 @@ export class VriendenComponent implements OnInit {
 
     );
   }
-
   //haalt alle vrienden, verzoeken en verzondenVerzoeken op van de huidige gebruiker
   haalVriendenOp() {
     this.vrienden = [];
     this.verzondenVerzoeken = [];
     this.verzoeken = [];
+    this.geenOnbekenden=[];
     this._vriendenService.getVrienden().subscribe(
       result => {
         this.gebruikers = result;

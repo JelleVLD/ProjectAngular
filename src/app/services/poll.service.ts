@@ -20,4 +20,9 @@ gebruiker;
     this.gebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
     return this.http.post<Poll>("https://localhost:44387/api/poll/",poll);
   }
+  //verwijdert de poll uit de API
+  verwijderPoll(id){
+    this.gebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
+    return this.http.delete<Poll>("https://localhost:44387/api/poll/"+id);
+  }
 }

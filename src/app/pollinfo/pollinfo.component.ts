@@ -5,6 +5,7 @@ import { Stem } from '../models/stem.model';
 import { StemService } from '../services/stem.service';
 import { Antwoord } from '../models/antwoord.model';
 import { Router } from '@angular/router';
+import { PollGebruikerService } from '../services/poll-gebruiker.service';
 
 @Component({
   selector: 'app-pollinfo',
@@ -27,7 +28,7 @@ get pollID(): number { return this._pollID; }
   gekozenPollID:number;
   poll:Poll;
   reedsGestemd=[];
-  constructor(public _pollService:PollService, private router: Router,public _stemService:StemService) {
+  constructor(public _pollService:PollService, private router: Router,public _stemService:StemService,public _pollGebruikerService:PollGebruikerService) {
     this.gekozenPollID = this.pollID; 
 
   }
@@ -58,6 +59,7 @@ this.reedsGestemd = [];
       }
     );
   }
+  //plaatst een stem bij het gegeven antwoordID via de stemService
 plaatsStem(id){
   const stem =new Stem(0,id,this.huidigeGebruiker.gebruikerID,null);
   this._stemService.nieuweStem(stem).subscribe(
@@ -66,6 +68,7 @@ plaatsStem(id){
     }
   );
 }
+//verwijdert een stem bij het gegeven antwoordID via de stemService
 verwijderStem(id){
   this._stemService.getStemmen().subscribe(
     result => {
@@ -80,6 +83,14 @@ verwijderStem(id){
           this.haalPollOp();
         }
       );
+    }
+  );
+}
+//verwijdert de poll via de stemService
+verwijderPoll(id){
+  this._pollGebruikerService.verwijderGebruikersBijPoll(id).subscribe(
+    result => {
+     this._pollService.verwijderPoll(id).subscribe(result =>{})
     }
   );
 }

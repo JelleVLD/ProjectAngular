@@ -25,5 +25,9 @@ gebruiker;
     stuurMail(email:Email){
       return this.http.post<Email>("https://localhost:44387/api/gebruiker/stuurmail",email);
     }
+    //verwijdert alle gebruikers die bij de meegegeven pollID horen uit de API.
+    verwijderGebruikersBijPoll(id){
+      return this.http.delete("https://localhost:44387/api/pollgebruiker/"+id);
+    }
   }
 
