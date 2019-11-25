@@ -9,12 +9,9 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 
 export class GebruikerService {
   constructor(private http: HttpClient) { }
+
+  //haalt alle gebruikers op en returned deze
   getGebruikers(): Observable<Gebruiker[]> {
     return this.http.get<Gebruiker[]>("https://localhost:44387/api/gebruiker");
-}
-getGebruikersVanVrienden(id): Observable<Gebruiker[]> {
-  return this.http.get<Gebruiker[]>("https://localhost:44387/api/gebruiker/", {
-  params: new HttpParams().set("id",id)
-  });
 }
 }

@@ -14,7 +14,9 @@ import { Router } from '@angular/router';
 export class PollinfoComponent implements OnInit {
   private _pollID = null;
   huidigeGebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
+  //haalt de gemaakt value op uit de parent component: polls
 @Input()gemaakt:boolean
+//haalt de pollID value op uit de parent component: polls, haalt de bijbehorende poll op  en refreshed deze wanneer ze veranderd in de parent component
 @Input('pollID')
 set pollID(pollID: number) {
    this._pollID = pollID;
@@ -30,16 +32,16 @@ get pollID(): number { return this._pollID; }
 
   }
 
-  ngOnInit() {
-     
+  ngOnInit(){
+    
   }
+  //haalt de poll op die hoort bij "this.pollID" via de pollService
   haalPollOp(){
     
 this.reedsGestemd = [];
     this.gekozenPollID = this.pollID;
     this._pollService.getPollsById(this.gekozenPollID).subscribe(
       result => {
-        console.log(result)
         this.poll=result;        
   const huidigeGebruiker = this.huidigeGebruiker;
         this.poll.antwoorden.forEach(antwoord => {

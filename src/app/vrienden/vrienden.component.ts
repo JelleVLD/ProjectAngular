@@ -34,14 +34,12 @@ export class VriendenComponent implements OnInit {
               if (gebruiker.gebruikerID != this.huidigeGebruiker.gebruikerID) {
 
                 this.alleGebruikers.push(gebruiker);
-
-        
         }
       }
       );
     });
 }
-
+//controleert of de gebruiker ingelogd is en zoniet navigeert naar de logincomponent, zowel haalt hij alle vrienden van de gebruiker op
   ngOnInit() {
     if (this.authService.isLoggedIn() != true) {
       this.router.navigate(['/login']);
@@ -50,6 +48,7 @@ export class VriendenComponent implements OnInit {
     this.huidigeGebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
 
   }
+  //stuurt een mail naar het ingevoerde emailadres met een link naar de registratiecomponent
   stuurMail(){
 
  let boodschap= this.huidigeGebruiker.gebruikersnaam + " wil vrienden met je worden op PollAppster! <a href=\"http://localhost:4200/register\">Registreer nu!</a>";
@@ -58,10 +57,8 @@ export class VriendenComponent implements OnInit {
  this._pollGebruikerService.stuurMail(mail).subscribe(() => {
   this._snackbar.open("Mail succesvol verstuurd!","Terug");
 });
-   
-  
-
   }
+  //controleert of de gebruiker al bevriend is met de gegeven gebruikerId en zoniet stuurt hij een verzoek via de vriendenService.
   stuurVerzoek(gebruikerId){
     if(this.geenOnbekenden.includes(gebruikerId)){
       this._snackbar.open("U heeft deze gebruiker al toegevoegd","Terug");
@@ -75,6 +72,7 @@ export class VriendenComponent implements OnInit {
     }
     
   }
+  //controleert of het extra window al open is, zoniet doet hij dit open, zowel doet hij het dicht.
   openGebruikersScherm() {
     if(this.triggered===true){
       this.triggered= false;
@@ -83,9 +81,11 @@ export class VriendenComponent implements OnInit {
 
     }
   }
+  //geeft alle vriendschapsverzoeken terug
   vriendenVerzoeken() {
     return this.verzoeken;
   }
+  //verwijdert de vriendschap met het gegeven gebruikerId via de vriendenService
   verwijderVriend(gebruikerId) {
 
     this._vriendenService.getVrienden().subscribe(
@@ -110,6 +110,7 @@ export class VriendenComponent implements OnInit {
 
   }
 
+  //accepteert het verzoek en zet dit in de API via de vriendenService
   toevoegenVriend(gebruikerId) {
     this._vriendenService.getVrienden().subscribe(
       result => {
@@ -133,6 +134,8 @@ export class VriendenComponent implements OnInit {
 
     );
   }
+
+  //haalt alle vrienden, verzoeken en verzondenVerzoeken op van de huidige gebruiker
   haalVriendenOp() {
     this.vrienden = [];
     this.verzondenVerzoeken = [];

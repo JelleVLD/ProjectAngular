@@ -31,6 +31,7 @@ export class NieuwepollComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder, public _vriendenService:VriendenService, public _pollService:PollService, public _antwoordService: AntwoordService,public _pollGebruikerService:PollGebruikerService,private router: Router) { }
 
+  //Op initialisatie zet deze functie validators op de formulieren en haalt alle vrienden op
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required]
@@ -44,6 +45,7 @@ export class NieuwepollComponent implements OnInit {
     this.haalVriendenOp();
     
   }
+  //Op submit van het formulier verstuurt de functie de aangemaakte poll, bijbehorende antwoorden, en uitnodigingen naar de API via de bijbehorende services
   onSubmit() {
     this.submitted = true;
     let antwoorden = this.antwoord.split(',')
@@ -68,13 +70,14 @@ export class NieuwepollComponent implements OnInit {
       result =>{});
       
       });
-console.log(this.geselecteerdeVrienden)
 this.router.navigate(['/polls']);
       }
     );
     
     
     }
+
+    //haalt alle vrienden op van de gebruiker via de vriendenService en zet deze in de variabele "this.vrienden"
   haalVriendenOp() {
     this.vrienden = [];
     this._vriendenService.getVrienden().subscribe(
@@ -94,24 +97,14 @@ this.router.navigate(['/polls']);
       }
     );
   }
+
+  //veranderd de geselecteerde vrienden wanneer men een vriend uitnodigt/annuleert
   selected(event:MatSelectChange){
     this.geselecteerdeVrienden =event.source.value
   }
+
+  //gaat terug naar de polls pagina
 terugKnop(){
   this.router.navigate(['/polls']);
 }
-  sync(bool, item){
-  if(bool){
-    // add item
-    this.geselecteerdeVrienden.push(item);
-  } else {
-    // remove item
-    for(var i=0 ; i < this.geselecteerdeVrienden.length; i++) {
-      if(this.geselecteerdeVrienden[i].gebruikerID == item.gebruikerID){
-        this.geselecteerdeVrienden.splice(i,1);
-      }
-    }      
-  }
-};
-
 }

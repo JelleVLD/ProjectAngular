@@ -10,10 +10,12 @@ export class PollService {
 gebruiker;
 
   constructor(private http: HttpClient) { }
+  //haalt alle polls op die horen bij een id en returned deze
   getPollsById(id):Observable<Poll> {
     this.gebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
     return this.http.get<Poll>("https://localhost:44387/api/poll/"+id);
   }
+  //post een nieuwe poll in de API
   nieuwePoll(poll: Poll):Observable<Poll> {
     this.gebruiker = JSON.parse(localStorage.getItem("Gebruiker"));
     return this.http.post<Poll>("https://localhost:44387/api/poll/",poll);

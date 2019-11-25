@@ -17,14 +17,18 @@ gekozenPollID:number;
     this.haalPollsOp();
    }
 
+   //controleert of de gebruiker ingelogd is en zoniet navigeert hij terug naar de logincomponent
   ngOnInit() {
     if (this.authService.isLoggedIn() != true) {
       this.router.navigate(['/login']);
     }
   }
+  //gaat naar de nieuwePollcomponent
   nieuwePoll(){
     this.router.navigate(['/nieuwePoll'])
   }
+
+  //haalt alle polls op die bij de huidige gebruiker horen via de pollGebruikerService
 haalPollsOp(){
   this._pollGebruikerService.getPollsById().subscribe(
     result => {

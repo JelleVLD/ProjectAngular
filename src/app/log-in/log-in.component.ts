@@ -15,6 +15,7 @@ export class LogInComponent implements OnInit {
   model: GebruikerLogin = new GebruikerLogin('','','');
   constructor(public _authenticateService : AuthenticateService,private router: Router,public vriendencomponent: VriendenComponent) { }
 
+  //controleert of de gebruiker al ingelogd is en indien navigeert automatisch naar de polls van deze gebruiker
   ngOnInit() {
     if (this._authenticateService.isLoggedIn()==true) {
       this.router.navigate(['/polls']);
@@ -23,6 +24,8 @@ export class LogInComponent implements OnInit {
   navigate() {
     this.router.navigate(['/routepath']);
     }
+
+  //neemt de ingevulde gegevens en haalt via de authenticateService de bijbehorende gebruiker op, zet deze in localstorage en navigeert vervolgens naar de polls van deze gebruiker 
   onSubmit() {
     this.submitted = true;
     this._authenticateService.authenticate(this.model).subscribe(result => {
